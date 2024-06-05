@@ -1,0 +1,165 @@
+/*
+ Copyright 2024 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* #liveView {
+    margin: 0;
+    padding: 0;
+} */
+
+
+video {
+    clear: both;
+    display: block;
+    /* transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg); */
+    position: absolute;
+    width: 100%;
+    height: auto;
+  }
+
+.output_canvas {
+    /* transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg); */
+    position: absolute;
+    width: 100%;
+    height: auto;
+} 
+
+.highlighterObjectDetection {
+    background: rgba(0, 255, 0, 0.25);
+    border: 1px dashed #fff;
+    z-index: 1;
+    position: absolute;
+  }
+
+.videoView p {
+    position: absolute;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: #007f8b;
+    color: #fff;
+    border: 1px dashed rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    font-size: 12px;
+    margin: 0;
+} 
+
+#contextResults {
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    /* round corners */
+    -webkit-border-radius: 10px;
+    /* with shadow */
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* transparent */
+    opacity: 0.5;
+}
+
+.context{
+    margin: 5px;
+}
+
+#impairmentsResults{
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    width: 300px;
+    /* round corners */
+    -webkit-border-radius: 10px;
+    /* with shadow */
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* transparent */
+    opacity: 0.5;
+}
+
+.impairment{
+    margin: 5px;
+}
+
+#blackCanvas{
+    position: absolute;
+    z-index: 9;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    display: none;
+}
+
+
+#call-popup, #message-popup, #call-reply-popup, #caption-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 450px;
+    z-index: 999;
+}
+
+#call-popup p, #message-popup p, #call-reply-popup p, #caption-popup p {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+/* Custom styles for different popups */
+#call-popup button, #message-popup button, #call-reply-popup button{
+    padding: 12px 24px; /* Increased padding for better touch targets */
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+    width: 48%; /* Full width on mobile devices, with a bit of margin */
+}
+
+#call-popup button:focus, #message-popup button:focus, #call-reply-popup button:focus {
+    outline: none;
+}
+
+#answerCallBtn {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+#answerCallBtn:hover {
+    background-color: #218838;
+}
+
+#closeCallBtn, #closeMessageBtn {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+#closeCallBtn:hover, #closeMessageBtn:hover {
+    background-color: #c82333;
+}
