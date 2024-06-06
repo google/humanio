@@ -18,45 +18,43 @@ const videoElement = document.getElementById('webcam');
 const cameraSelect = document.getElementById('cameraSelect');
 
 async function getCameras() {
-    try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(device => device.kind === 'videoinput');
-        return videoDevices;
-    } catch (error) {
-        console.error('Error getting devices:', error);
-    }
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+    return videoDevices;
+  } catch (error) {
+    console.error('Error getting devices:', error);
+  }
 }
 
 async function populateCameraDropdown() {
-    const cameras = await getCameras();
-    cameras.forEach(camera => {
-        const option = document.createElement('option');
-        option.value = camera.deviceId;
-        option.textContent = camera.label || `Camera ${camera.deviceId}`;
-        cameraSelect.appendChild(option);
-    });
+  const cameras = await getCameras();
+  cameras.forEach(camera => {
+    const option = document.createElement('option');
+    option.value = camera.deviceId;
+    option.textContent = camera.label || `Camera ${camera.deviceId}`;
+    cameraSelect.appendChild(option);
+  });
 }
 
 async function startVideoStream(deviceId) {
-    try {
-        const constraints = {
-            video: {
-                deviceId: deviceId ? { exact: deviceId } : undefined
-            }
-        };
+  try {
+    const constraints = {
+      video: {deviceId: deviceId ? {exact: deviceId} : undefined}
+    };
 
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        videoElement.srcObject = stream;
-    } catch (error) {
-        console.error('Error starting video stream:', error);
-    }
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    videoElement.srcObject = stream;
+  } catch (error) {
+    console.error('Error starting video stream:', error);
+  }
 }
 
 cameraSelect.addEventListener('change', () => {
-    const selectedDeviceId = cameraSelect.value;
-    startVideoStream(selectedDeviceId);
+  const selectedDeviceId = cameraSelect.value;
+  startVideoStream(selectedDeviceId);
 });
 
 populateCameraDropdown().then(() => {
-    startVideoStream(cameraSelect.value);
+  startVideoStream(cameraSelect.value);
 });

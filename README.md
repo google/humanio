@@ -26,11 +26,12 @@ Please cite Human I/O as follows if you find it useful in your projects:
 
 ## API Keys
 
-To run Human I/O, you need to provide your own API keys in `server.js` and `util.js` files for the web app to work properly. 
+To run Human I/O, you need to provide your own API keys in `server.js` and `util.js` files for the web app to work properly. Search for `YOUR API KEY`
 
-In addition, you need to place your [Google Cloud Vision AI](https://cloud.google.com/vision) credentials (`key.pem` and `cert.pem`) in the folder. 
+In addition, you need to place your [Google Cloud Vision AI](https://cloud.google.com/vision) credentials (`key.pem` and `cert.pem`) in the folder.
 
 ## Getting Started
+
 ### Test and run locally on a browser
 <!-- code block -->
 <pre><code>npm init
@@ -39,11 +40,13 @@ npm start
 </code></pre>
 
 ### View localhost web app on mobile devices
+
 Download and install `ngrok` on your computer.
 Start `ngrok` and expose the port that your web app is running on. For example, if your web app is running on port 8000, type `ngrok http 8000` in the Terminal.
-Open the browser on your Android phone and type in the URL that `ngrok` provides. For example, https://randomstring.ngrok.io/myapp.
+Open the browser on your Android phone and type in the URL that `ngrok` provides. For example, <https://randomstring.ngrok.io/myapp>.
 
 ## Using Human I/O
-You can use Human I/O, you can either use it with your webcam. You can select the webcam device from the `cameraSelect` dropdown. 
 
-In addition, you can run Human I/O on local videos. Put your video (.mp4 format) into the video folder, enter the video filename (without .mp4), and click `load`. 
+You can use Human I/O, you can either use it with your webcam. You can select the webcam device from the `cameraSelect` dropdown.
+
+In addition, you can run Human I/O on local videos. Put your video (.mp4 format) into the video folder, enter the video filename (without .mp4), and click `load`.

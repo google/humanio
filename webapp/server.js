@@ -14,91 +14,86 @@
  limitations under the License.
  */
 
-const express = require("express");
+const express = require('express');
 const fs = require('fs');
 const https = require('https');
 const app = express();
 
-// server your css as static
+// Serves your css as static.
 app.use(express.static(__dirname));
 
-// increase data limit
+// Increases data limit.
 app.use(express.json({limit: '50mb'}));
 
-// Read the private key and certificate files
+// Reads the private key and certificate files.
 const privateKey = fs.readFileSync('key.pem', 'utf8');
 const certificate = fs.readFileSync('cert.pem', 'utf8');
 
-const credentials = { key: privateKey, cert: certificate };
+const credentials = {
+  key: privateKey,
+  cert: certificate
+};
 
-// Create an HTTPS server using the credentials
+// Creates an HTTPS server using the credentials.
 const httpsServer = https.createServer(credentials, app);
 
-// Set the HTTPS server to listen on a specific port (e.g., 3000)
+// Sets the HTTPS server to listen on a specific port (e.g., 3000).
 httpsServer.listen(3000, () => {
   console.log('HTTPS server running on https://localhost:3000');
 });
 
-// post function to get image caption
-app.post("/imageCaption", async (req, res) => {
-    const image = req.body.image;
-    const caption = req.body.caption;
-    const question = req.body.question;
-    const data = await replicateGenerateCaption(image, caption, question);
-    const id = data.id;
-    const result = await replicateGetCaption(id);
-    res.send(result);
+// Post function to get image caption.
+app.post('/imageCaption', async (req, res) => {
+  const image = req.body.image;
+  const caption = req.body.caption;
+  const question = req.body.question;
+  const data = await replicateGenerateCaption(image, caption, question);
+  const id = data.id;
+  const result = await replicateGetCaption(id);
+  res.send(result);
 });
 
 
-// get replicate image caption BLIP2
-async function replicateGenerateCaption(image, caption, question){
-    const apikey = "YOUR API KEY";
-    const endpoint = "https://api.replicate.com/v1/predictions";
+// Gets replicate image caption BLIP2.
+async function replicateGenerateCaption(image, caption, question) {
+  const apikey = 'YOUR API KEY';
+  const endpoint = 'https://api.replicate.com/v1/predictions';
 
-    const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${apikey}`
-        },
-        body: JSON.stringify({
-            version: "4b32258c42e9efd4288bb9910bc532a69727f9acd26aa08e175713a0a857a608", // BLIP2
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${apikey}`
+    },
+    body: JSON.stringify({
+      version:
+          '4b32258c42e9efd4288bb9910bc532a69727f9acd26aa08e175713a0a857a608',  // BLIP2
 
-            input: {
-                image: image,
-                caption: caption,
-                question: question
-            }
-        })
-    });
-    const data = await response.json();
-    return data;
+      input: {image: image, caption: caption, question: question}
+    })
+  });
+  const data = await response.json();
+  return data;
 }
 
-// get finalized replicate image caption BLIP2
-async function replicateGetCaption(id){
-    const apikey = "YOUR API KEY";
-    const endpoint = `https://api.replicate.com/v1/predictions/${id}`;
+// Gets finalized replicate image caption BLIP2.
+async function replicateGetCaption(id) {
+  const apikey = 'YOUR API KEY';
+  const endpoint = `https://api.replicate.com/v1/predictions/${id}`;
 
-    const response = await fetch(endpoint, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${apikey}`
-        }
-    });
-    const data = await response.json();
-    if (data.status != "succeeded"){
-        console.log("Retrying...")
-        return await replicateGetCaption(id);
-    }
-    return data;
+  const response = await fetch(endpoint, {
+    method: 'GET',
+    headers:
+        {'Content-Type': 'application/json', 'Authorization': `Token ${apikey}`}
+  });
+  const data = await response.json();
+  if (data.status != 'succeeded') {
+    console.log('Retrying...')
+    return await replicateGetCaption(id);
+  }
+  return data;
 }
 
-
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
-

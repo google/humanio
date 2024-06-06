@@ -18,6 +18,3 @@
 var gui = new dat.GUI({name: 'Human I/O Settings'});
 
 export {gui}
-
-
-
