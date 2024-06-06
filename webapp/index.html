@@ -1,4 +1,4 @@
-<!-- 
+<!--
  Copyright 2024 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,9 +11,8 @@
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
- limitations under the License. 
+ limitations under the License.
 -->
-
 
 <!-- python3 -m http.server -->
 <!DOCTYPE html>
@@ -21,14 +20,22 @@
   <head>
     <title>Human I/O Web</title>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm/vision_wasm_internal.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-audio/wasm/audio_wasm_internal.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-audio/wasm/audio_wasm_internal.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
 
     <script type="text/javascript" src="dat.gui.min.js"></script>
   </head>
   <body>
-
     <div id="blackCanvas"></div>
 
     <!-- Live Camera -->
@@ -38,25 +45,44 @@
         <video id="loadedVideo" autoplay playsinline></video>
         <canvas class="output_canvas" id="output_canvas"></canvas>
       </div>
-      
+
       <div id="audioResults">
-        <p id="volumeResult"></p><br><br>
+        <p id="volumeResult"></p>
+        <br /><br />
         <p id="audioClassificationResult"></p>
       </div>
 
       <div id="contextResults">
-        <div class="context"><b>Holding:</b> <i><span id="holdingObject"></span></i></div>
-        <div class="context"><b>Caption:</b> <span id="captionResult"></span></div>
-        <div class="context"><b>Caption Hand:</b> <span id="captionHandResult"></span></div>
-        <div class="context"><b>Activity:</b> <span id="activityResult"></span></div>
-        <div class="context"><b>Environment:</b> <span id="environmentResult"></span></div>
+        <div class="context">
+          <b>Holding:</b> <i><span id="holdingObject"></span></i>
+        </div>
+        <div class="context">
+          <b>Caption:</b> <span id="captionResult"></span>
+        </div>
+        <div class="context">
+          <b>Caption Hand:</b> <span id="captionHandResult"></span>
+        </div>
+        <div class="context">
+          <b>Activity:</b> <span id="activityResult"></span>
+        </div>
+        <div class="context">
+          <b>Environment:</b> <span id="environmentResult"></span>
+        </div>
       </div>
 
       <div id="impairmentsResults">
-        <div class="impairment"><b>👁️ Vision / Eye:</b> <i><span id="eyeStatus"></span></i></div>
-        <div class="impairment"><b>👂 Hearing:</b>  <i><span id="hearingStatus"></span></i></div>
-        <div class="impairment"><b>👄 Vocal System:</b>  <i><span id="vocalStatus"></span></i></div>
-        <div class="impairment"><b>✋ Hands / Fingers:</b>  <i><span id="handStatus"></span></i></div>
+        <div class="impairment">
+          <b>👁️ Vision / Eye:</b> <i><span id="eyeStatus"></span></i>
+        </div>
+        <div class="impairment">
+          <b>👂 Hearing:</b> <i><span id="hearingStatus"></span></i>
+        </div>
+        <div class="impairment">
+          <b>👄 Vocal System:</b> <i><span id="vocalStatus"></span></i>
+        </div>
+        <div class="impairment">
+          <b>✋ Hands / Fingers:</b> <i><span id="handStatus"></span></i>
+        </div>
       </div>
     </div>
 
@@ -67,58 +93,61 @@
 
     <form>
       <label for="video-url" class="form-label">Video File:</label>
-      <input type="text" class="form-control" id="video-url" name="video-url" placeholder="0c3f8dc4-f899-4319-bc7c-beaa5ae10b50">
+      <input
+        type="text"
+        class="form-control"
+        id="video-url"
+        name="video-url"
+        placeholder="0c3f8dc4-f899-4319-bc7c-beaa5ae10b50"
+      />
       <button type="button" id="loadVideo">Load Video</button>
     </form>
 
     <!-- button to export log data -->
     <button id="saveLogs">Save Logs</button>
 
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
 
     <script src="util.js" type="module"></script>
     <script src="scriptGUI.js" type="module"></script>
     <script>
       let visualModelsLoaded = false;
       let audioModelsLoaded = false;
-    
-      // load visual script
-      let script = document.createElement('script');
-      script.src = 'scriptVisual.js';
-      script.type = 'module';
-      script.defer = true;
-      document.getElementsByTagName('head')[0].appendChild(script);
 
+      // load visual script
+      let script = document.createElement("script");
+      script.src = "scriptVisual.js";
+      script.type = "module";
+      script.defer = true;
+      document.getElementsByTagName("head")[0].appendChild(script);
 
       // only load audio script if visuals are loaded, else wait for 100ms
       function loadAudioScript() {
         if (visualModelsLoaded) {
-          let script = document.createElement('script');
-          script.src = 'scriptAudio.js';
-          script.type = 'module';
+          let script = document.createElement("script");
+          script.src = "scriptAudio.js";
+          script.type = "module";
           script.defer = true;
-          document.getElementsByTagName('head')[0].appendChild(script);
+          document.getElementsByTagName("head")[0].appendChild(script);
 
           // load script.js
-          let script2 = document.createElement('script');
-          script2.src = 'script.js';
-          script2.type = 'module';
+          let script2 = document.createElement("script");
+          script2.src = "script.js";
+          script2.type = "module";
           script2.defer = true;
-          document.getElementsByTagName('head')[0].appendChild(script2);  
+          document.getElementsByTagName("head")[0].appendChild(script2);
 
           // load cameraSelect.js
-          let script3 = document.createElement('script');
-          script3.src = 'cameraSelect.js';
-          script3.type = 'module';
+          let script3 = document.createElement("script");
+          script3.src = "cameraSelect.js";
+          script3.type = "module";
           script3.defer = true;
-          document.getElementsByTagName('head')[0].appendChild(script3);
-
+          document.getElementsByTagName("head")[0].appendChild(script3);
         } else {
           setTimeout(loadAudioScript, 100);
         }
       }
       loadAudioScript();
     </script>
-    
   </body>
 </html>
