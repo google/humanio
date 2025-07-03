@@ -14,7 +14,7 @@ Please cite Human I/O as follows if you find it useful in your projects:
 ```bibtex
 @inproceedings{Liu2024Human,
   title = {{Human I/O: Towards a Unified Approach to Detecting Situational Impairments}},
-  author = {Liu, Xingyu Bruce and Li, Jiahao Nick and Kim, David and Chen, Xiang 'Anthony' and Du, Ruofei},
+  author = {Liu, Xingyu Bruce and Li, Jiahao Nick and Kim, David and Chen, Xiang `Anthony' and Du, Ruofei},
   booktitle = {Proceedings of the 2024 CHI Conference on Human Factors in Computing Systems},
   year = {2024},
   publisher = {ACM},
@@ -33,11 +33,12 @@ In addition, you need to place your [Google Cloud Vision AI](https://cloud.googl
 ## Getting Started
 
 ### Test and run locally on a browser
-<!-- code block -->
-<pre><code>npm init
+
+```bash
+npm init
 npm install express
 npm start
-</code></pre>
+```
 
 ### View localhost web app on mobile devices
 
@@ -50,3 +51,8 @@ Open the browser on your Android phone and type in the URL that `ngrok` provides
 You can use Human I/O, you can either use it with your webcam. You can select the webcam device from the `cameraSelect` dropdown.
 
 In addition, you can run Human I/O on local videos. Put your video (.mp4 format) into the video folder, enter the video filename (without .mp4), and click `load`.
+
+## Blog Post
+
+[Human I/O: Detecting situational impairments with large language models
+](https://research.google/blog/human-io-detecting-situational-impairments-with-large-language-models/)
