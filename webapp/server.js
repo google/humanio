@@ -17,10 +17,12 @@
 const express = require('express');
 const fs = require('fs');
 const https = require('https');
+const path = require('path');
 const app = express();
 
 // Serves your css as static.
-app.use(express.static(__dirname));
+app.use((req, res, next) => { if (req.path === '/server.js') return res.status(404).send('Not found'); next(); });
+app.use(express.static(__dirname, { index: false }));
 
 // Increases data limit.
 app.use(express.json({limit: '50mb'}));
@@ -56,7 +58,7 @@ app.post('/imageCaption', async (req, res) => {
 
 // Gets replicate image caption BLIP2.
 async function replicateGenerateCaption(image, caption, question) {
-  const apikey = 'YOUR API KEY';
+  const apikey = process.env.REPLICATE_TOKEN || '';
   const endpoint = 'https://api.replicate.com/v1/predictions';
 
   const response = await fetch(endpoint, {
@@ -78,7 +80,7 @@ async function replicateGenerateCaption(image, caption, question) {
 
 // Gets finalized replicate image caption BLIP2.
 async function replicateGetCaption(id) {
-  const apikey = 'YOUR API KEY';
+  const apikey = process.env.REPLICATE_TOKEN || '';
   const endpoint = `https://api.replicate.com/v1/predictions/${id}`;
 
   const response = await fetch(endpoint, {
