@@ -56,3 +56,11 @@ In addition, you can run Human I/O on local videos. Put your video (.mp4 format)
 
 [Human I/O: Detecting situational impairments with large language models
 ](https://research.google/blog/human-io-detecting-situational-impairments-with-large-language-models/)
+
+> **Security hardening**  
+> - Do **not** put secrets in client code. Provide `OPENAI_API_KEY` and `REPLICATE_TOKEN` as environment variables on the server.  
+> - If you expose the app over the Internet (e.g., ngrok), ensure it runs behind the backend proxy (`/api/chat`) and never serve server-side files from the static root.
+
+> **Security hardening**  
+> - Do **not** put secrets in client code. Provide `OPENAI_API_KEY` and `REPLICATE_TOKEN` as environment variables on the server.  
+> - If you expose the app over the Internet (e.g., ngrok), keep server files non-public and call `/api/chat` proxy from the client.

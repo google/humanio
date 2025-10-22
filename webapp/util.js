@@ -34,8 +34,7 @@ async function callGPT(prompt) {
 }
 
 async function completeChat(prompt) {
-    const apiKey = "YOUR API KEY";
-    const endpoint = "https://api.openai.com/v1/chat/completions";
+    const endpoint = "/api/chat";
     // const model = "gpt-3.5-turbo";
     const model = "gpt-4o";
     const messages = [{"role": "user", "content": prompt}];
@@ -71,7 +70,6 @@ async function callGPTLite(prompt) {
 }
 
 async function completeChatcallGPTLite(prompt) {
-    const apiKey = "YOUR API KEY";
     const data = { "prompt": prompt,
     "max_tokens": 64,
     "temperature": 0.0,
