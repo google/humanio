@@ -24,6 +24,28 @@ Please cite Human I/O as follows if you find it useful in your projects:
 }
 ```
 
+This codebase is no longer under active maintenance. The follow-up work of this
+is [Sensible Agent](https://duruofei.com/projects/sensibleai/):
+
+```bibtex
+@inproceedings{Lee2025Sensible,
+  title = {{Sensible Agent: A Framework for Unobtrusive Interaction with Proactive AR Agent}},
+  author = {Lee, Geonsun and Xia, Min and Numan, Nels and Qian, Xun and Li, David and Chen, Yanhe and Kulshrestha, Achin and Chatterjee, Ishan and Zhang, Yinda and Manocha, Dinesh and Kim, David and Du, Ruofei},
+  booktitle = {Proceedings of the 38th Annual ACM Symposium on User Interface Software and Technology},
+  year = {2025},
+  publisher = {ACM},
+  numpages = {22},
+  series = {UIST},
+  doi = {10.1145/3746059.3747748},
+}
+```
+
+We encourage future contributors to [XR Blocks](https://github.com/google/xrblocks) for a cross-platform, open-source framework for AI + XR innovations. Example demos of Gemini in XR Blocks include:
+
+* Gemini Icebreakers: https://xrblocks.github.io/docs/samples/Gemini-Icebreakers/
+* XR Poet: https://xrblocks.github.io/docs/samples/XR-Poet/
+* XR Object: https://xrblocks.github.io/docs/samples/Gemini-XRObject/
+
 ## API Keys
 
 To run Human I/O, you need to provide your own API keys in `server.js` and `util.js` files for the web app to work properly. Search for `YOUR API KEY`
