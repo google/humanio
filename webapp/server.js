@@ -44,6 +44,32 @@ httpsServer.listen(3000, () => {
   console.log('HTTPS server running on https://localhost:3000');
 });
 
+// Proxies OpenAI API calls so the API key never reaches the browser.
+const OPENAI_ALLOWED_ENDPOINTS =
+    /^(chat\/completions|completions|engines\/[A-Za-z0-9._-]+\/completions)$/;
+app.post('/openaiProxy', async (req, res) => {
+  const apiKey = process.env.OPENAI_API_KEY || '';
+  const endpoint = req.body && req.body.endpoint;
+  const payload = req.body && req.body.payload;
+  if (typeof endpoint !== 'string' || !OPENAI_ALLOWED_ENDPOINTS.test(endpoint)) {
+    return res.status(400).json({error: 'invalid endpoint'});
+  }
+  try {
+    const upstream = await fetch('https://api.openai.com/v1/' + endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify(payload || {})
+    });
+    const data = await upstream.json();
+    res.status(upstream.status).json(data);
+  } catch (err) {
+    res.status(502).json({error: 'upstream request failed'});
+  }
+});
+
 // Post function to get image caption.
 app.post('/imageCaption', async (req, res) => {
   const image = req.body.image;

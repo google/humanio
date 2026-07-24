@@ -34,26 +34,26 @@ async function callGPT(prompt) {
 }
 
 async function completeChat(prompt) {
-    const apiKey = "YOUR API KEY";
-    const endpoint = "https://api.openai.com/v1/chat/completions";
     // const model = "gpt-3.5-turbo";
     const model = "gpt-4o";
     const messages = [{"role": "user", "content": prompt}];
     const temperature = 0.0;
-  
-    const response = await fetch(endpoint, {
+
+    const response = await fetch('/openaiProxy', {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model,
-        messages,
-        temperature
+        endpoint: "chat/completions",
+        payload: {
+          model,
+          messages,
+          temperature
+        }
       })
     });
-  
+
     const data = await response.json();
     return data;
   }
@@ -71,7 +71,6 @@ async function callGPTLite(prompt) {
 }
 
 async function completeChatcallGPTLite(prompt) {
-    const apiKey = "YOUR API KEY";
     const data = { "prompt": prompt,
     "max_tokens": 64,
     "temperature": 0.0,
@@ -82,15 +81,15 @@ async function completeChatcallGPTLite(prompt) {
   let model_curie = "text-curie-001";
   let model_babbage = "babbage-002";
   let model_ada = "text-ada-001";
-	const response = await fetch(
-		"https://api.openai.com/v1/engines/" + model_babbage + "/completions",
-		{
+	const response = await fetch('/openaiProxy', {
       headers: {
-        "Content-Type": 'application/json',
-        Authorization: "Bearer " + apiKey
+        "Content-Type": 'application/json'
       },
 			method: "POST",
-			body: JSON.stringify(data),
+			body: JSON.stringify({
+        endpoint: "engines/" + model_babbage + "/completions",
+        payload: data
+      }),
 		}
 	);
   const result = await response.json();
